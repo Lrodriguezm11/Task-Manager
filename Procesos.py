@@ -4,6 +4,7 @@ from collections import deque
 
 class Proceso:
     def __init__(self, nombre, tiempo):
+         # Inicialización de la aplicación de administración de procesos.
         self.nombre = nombre
         self.tiempo = tiempo
         self.tiempo_restante = tiempo
@@ -16,9 +17,11 @@ class ProgramaScheduling:
         self.en_ejecucion = None
         self.algoritmo_actual = tk.StringVar()
 
+        # Creación de la interfaz gráfica.
         self.menu_frame = tk.Frame(root, bg="#f0f0f0")  
         self.menu_frame.pack()
 
+        # Botones para seleccionar algoritmos y borrar procesos.
         self.lifo_button = tk.Button(self.menu_frame, text="LIFO", command=self.mostrar_ventana_proceso_lifo, bg="#4caf50", fg="white", padx=10)
         self.lifo_button.pack(side="left")
 
@@ -31,12 +34,15 @@ class ProgramaScheduling:
         self.algoritmo_label = tk.Label(self.menu_frame, textvariable=self.algoritmo_actual, font=("Arial", 12))
         self.algoritmo_label.pack(side="left")
 
+        # Marco para mostrar los procesos y su progreso.
         self.procesos_frame = tk.Frame(root, bg="#ffffff")  
         self.procesos_frame.pack(fill=tk.BOTH, expand=True)
 
+        # Función para actualizar los procesos periódicamente.
         self.root.after(1000, self.actualizar_procesos)
     
     def borrar_procesos(self):
+        # Función para borrar todos los procesos y reiniciar la simulación.
         for widget in self.procesos_frame.winfo_children():
             widget.destroy()
         self.procesos_lifo.clear()
@@ -45,10 +51,12 @@ class ProgramaScheduling:
         self.algoritmo_actual.set("")
 
     def mostrar_ventana_proceso_lifo(self):
+        # Función para mostrar una ventana y agregar un proceso usando LIFO.
         ventana_proceso = tk.Toplevel(self.root)
         ventana_proceso.title("Agregar Proceso LIFO")
         ventana_proceso.geometry("300x200")
 
+        # Campos para ingresar nombre y tiempo del proceso.
         self.nombre_label = tk.Label(ventana_proceso, text="Nombre del proceso:", font=("Arial", 12))
         self.nombre_label.pack()
 
@@ -61,14 +69,17 @@ class ProgramaScheduling:
         self.tiempo_entry = tk.Entry(ventana_proceso, font=("Arial", 12))
         self.tiempo_entry.pack()
 
+        # Botón para agregar el proceso.
         self.agregar_button = tk.Button(ventana_proceso, text="Agregar Proceso", command=self.agregar_proceso_lifo, bg="#4caf50", fg="white", padx=10)
         self.agregar_button.pack()
 
     def mostrar_ventana_proceso_fifo(self):
+        # Función para mostrar una ventana y agregar un proceso usando FIFO.
         ventana_proceso = tk.Toplevel(self.root)
         ventana_proceso.title("Agregar Proceso FIFO")
         ventana_proceso.geometry("300x200")
 
+        # Campos para ingresar nombre y tiempo del proceso.
         self.nombre_label = tk.Label(ventana_proceso, text="Nombre del proceso:", font=("Arial", 12))
         self.nombre_label.pack()
 
@@ -81,10 +92,12 @@ class ProgramaScheduling:
         self.tiempo_entry = tk.Entry(ventana_proceso, font=("Arial", 12))
         self.tiempo_entry.pack()
 
+        # Botón para agregar el proceso.
         self.agregar_button = tk.Button(ventana_proceso, text="Agregar Proceso", command=self.agregar_proceso_fifo, bg="#2196f3", fg="white", padx=10)
         self.agregar_button.pack()
 
     def agregar_proceso_lifo(self):
+        # Función para agregar un proceso usando LIFO.
         nombre = self.nombre_entry.get()
         tiempo = int(self.tiempo_entry.get())
         proceso = Proceso(nombre, tiempo)
@@ -109,11 +122,13 @@ class ProgramaScheduling:
         self.tiempo_entry.delete(0, tk.END)
 
     def agregar_proceso_fifo(self):
+        # Función para agregar un proceso usando LIFO.
         nombre = self.nombre_entry.get()
         tiempo = int(self.tiempo_entry.get())
         proceso = Proceso(nombre, tiempo)
         self.procesos_fifo.append(proceso)
 
+        # Actualización de la interfaz con el nuevo proceso.
         proceso_frame = tk.Frame(self.procesos_frame, bg="#ffffff", padx=10, pady=5, relief=tk.RAISED, borderwidth=1)
         proceso_frame.pack(fill=tk.X)
 
@@ -134,6 +149,7 @@ class ProgramaScheduling:
 
 
     def actualizar_procesos(self):
+        # Función para actualizar el progreso de los procesos.
         if self.en_ejecucion is None or self.en_ejecucion.tiempo_restante <= 0:
             if len(self.procesos_lifo) > 0:
                 self.en_ejecucion = self.procesos_lifo.pop()  # Obtener el último proceso de la cola LIFO
