@@ -16,7 +16,7 @@ class ProgramaScheduling:
         self.en_ejecucion = None
         self.algoritmo_actual = tk.StringVar()
 
-        self.menu_frame = tk.Frame(root, bg="#f0f0f0")  # Fondo gris claro para el marco de menú
+        self.menu_frame = tk.Frame(root, bg="#f0f0f0")  
         self.menu_frame.pack()
 
         self.lifo_button = tk.Button(self.menu_frame, text="LIFO", command=self.mostrar_ventana_proceso_lifo, bg="#4caf50", fg="white", padx=10)
@@ -31,7 +31,7 @@ class ProgramaScheduling:
         self.algoritmo_label = tk.Label(self.menu_frame, textvariable=self.algoritmo_actual, font=("Arial", 12))
         self.algoritmo_label.pack(side="left")
 
-        self.procesos_frame = tk.Frame(root, bg="#ffffff")  # Fondo blanco para el marco de procesos
+        self.procesos_frame = tk.Frame(root, bg="#ffffff")  
         self.procesos_frame.pack(fill=tk.BOTH, expand=True)
 
         self.root.after(1000, self.actualizar_procesos)
